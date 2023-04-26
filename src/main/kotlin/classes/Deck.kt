@@ -11,28 +11,48 @@ import utils.SpecialCardTypes
 * */
 class Deck {
 
+    private var currentCard: Card? = null
     private val cards: MutableList<Card> = mutableListOf()
     private val cardAmount: Int = CARD_AMOUNT
 
 
 
-    fun createDeck(){
+    private fun createDeck(){
         for(value in 0..cardAmount / VALID_CARD_TYPES.size){
-            val (cardLabel, cardDisplayValue) = setCardAndDisplayLabel(value = value)
+            val (label, displayValue) = setCardLabelAndDisplayValue(value = value)
             VALID_CARD_TYPES.forEach { cardType: DefaultCardTypes  ->
                 cards.add(
                     Card(
                         type = cardType,
                         value = value,
-                        label = "$cardLabel of ${cardType.label}",
-                        displayValue = "$cardDisplayValue ${cardType.symbol}"
+                        label = "$label of ${cardType.label}",
+                        displayValue = "$displayValue ${cardType.symbol}"
                     )
                 )
             }
         }
     }
 
-    private fun setCardAndDisplayLabel(value: Int): Pair<String, String>{
+    private fun resetDeck(){
+        cards.clear()
+        createDeck()
+    }
+
+    private fun shuffleDeck(){
+        cards.shuffle()
+    }
+
+    private fun drawFirstCardInDeck(){
+        currentCard = cards.first()
+        cards.remove(currentCard)
+    }
+
+    private fun getCurrentCardLabelAndDisplaylValue(): Pair<String, String>? {
+        val card = currentCard ?: return null //handle this when implementing error handling
+        return Pair(card.label, card.displayValue)
+    }
+
+    private fun setCardLabelAndDisplayValue(value: Int): Pair<String, String>{
         return when(value){
             SpecialCardTypes.ACE.value -> Pair(SpecialCardTypes.ACE.label, SpecialCardTypes.ACE.symbol)
             SpecialCardTypes.KNIGHT.value -> Pair(SpecialCardTypes.KNIGHT.label, SpecialCardTypes.KNIGHT.symbol)
