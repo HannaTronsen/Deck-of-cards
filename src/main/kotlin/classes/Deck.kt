@@ -2,6 +2,7 @@ package classes
 
 import CARD_AMOUNT
 import CURRENT_CARD_ERROR_MESSAGE
+import NO_MORE_CARDS_IN_DECK_ERROR_MESSAGE
 import VALID_CARD_TYPES
 import utils.DefaultCardTypes
 import utils.SpecialCardTypes
@@ -14,10 +15,13 @@ class Deck {
 
     private var currentCard: Card? = null
     private val cards: MutableList<Card> = mutableListOf()
-    private val cardAmount: Int = CARD_AMOUNT
+
+    init {
+        createDeck()
+    }
 
     private fun createDeck(){
-        for(value in 0..cardAmount / VALID_CARD_TYPES.size){
+        for(value in 1..CARD_AMOUNT / VALID_CARD_TYPES.size){
             val (label, displayValue) = setCardLabelAndDisplayValue(value = value)
             VALID_CARD_TYPES.forEach { cardType: DefaultCardTypes  ->
                 cards.add(
@@ -31,34 +35,43 @@ class Deck {
             }
         }
     }
-
-    private fun resetDeck(){
+    internal fun resetDeck(){
         cards.clear()
         createDeck()
     }
 
-    private fun shuffleDeck(){
+    internal fun shuffleDeck(){
         cards.shuffle()
     }
 
-    private fun drawFirstCardInDeck(){
+    internal fun drawFirstCardInDeck(){
         if(cards.isNotEmpty()){
             currentCard = cards.first()
             cards.remove(currentCard)
         } else {
-            println("There are no more cards left in this deck, you need to reset the deck")
+            println(NO_MORE_CARDS_IN_DECK_ERROR_MESSAGE)
         }
     }
 
-    private fun getCurrentCardDisplayValue(): String {
+    internal fun getCurrentCardDisplayValue(): String {
         val card = currentCard ?: return CURRENT_CARD_ERROR_MESSAGE
         return card.displayValue
     }
 
-    private fun getCurrentCardLabel(): String {
+    internal fun getCurrentCardLabel(): String {
         val card = currentCard ?: return CURRENT_CARD_ERROR_MESSAGE
         return card.label
     }
+
+    internal fun createDeckSnapshot(): String {
+        return cards.joinToString(separator = "\n") { it.label }
+    }
+
+    internal fun getCardCountInActiveDeck(): Int {
+        return cards.size
+    }
+
+    internal fun getCards(): MutableList<Card> =  cards
 
     private fun setCardLabelAndDisplayValue(value: Int): Pair<String, String>{
         return when(value){

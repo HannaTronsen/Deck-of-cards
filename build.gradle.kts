@@ -2,6 +2,8 @@ plugins {
     kotlin("jvm") version "1.8.0"
 }
 
+apply(from = "${rootDir}/gradle/snapshot-tests.gradle")
+
 group = "org.example"
 version = "1.0-SNAPSHOT"
 
