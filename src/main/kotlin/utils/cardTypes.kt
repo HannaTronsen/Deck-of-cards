@@ -2,7 +2,7 @@ package utils
 
 /***
 * DefaultCardTypes defines the default types of cards we can see in a deck of cards.
-* If we later wanted to introduce different card type, like for example "Circle", it
+* If we later wanted to introduce different graphics.getCard type, like for example "Circle", it
 * would be easy to modify the code if we have the type defined in an enum like this.
 * */
 enum class DefaultCardTypes(val label: String, val symbol: String) {
@@ -19,9 +19,9 @@ enum class DefaultCardTypes(val label: String, val symbol: String) {
 * If we later wanted to add different types of special cards, like for example the "Joker", it
 * would be easy to modify the code if we have the types defined in an enum like this.
  * */
-enum class SpecialCardTypes(val label: String, val symbol: String, val value: Int){
-    ACE(label = "Ace", symbol = "A", value = 1),
-    KNIGHT(label = "Knight", symbol = "J", value = 11),
-    QUEEN(label = "Queen", symbol = "Q", value = 12),
-    KING(label = "King", symbol = "K", value = 13),
+enum class SpecialCardTypes(val label: String, val initial: String, val value: Int){
+    ACE(label = "Ace", initial = "A", value = 1),
+    KNIGHT(label = "Jack", initial = "J", value = 11),
+    QUEEN(label = "Queen", initial = "Q", value = 12),
+    KING(label = "King", initial = "K", value = 13),
 }
