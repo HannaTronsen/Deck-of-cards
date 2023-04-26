@@ -1,6 +1,7 @@
 package classes
 
 import CARD_AMOUNT
+import CURRENT_CARD_ERROR_MESSAGE
 import VALID_CARD_TYPES
 import utils.DefaultCardTypes
 import utils.SpecialCardTypes
@@ -14,8 +15,6 @@ class Deck {
     private var currentCard: Card? = null
     private val cards: MutableList<Card> = mutableListOf()
     private val cardAmount: Int = CARD_AMOUNT
-
-
 
     private fun createDeck(){
         for(value in 0..cardAmount / VALID_CARD_TYPES.size){
@@ -43,13 +42,22 @@ class Deck {
     }
 
     private fun drawFirstCardInDeck(){
-        currentCard = cards.first()
-        cards.remove(currentCard)
+        if(cards.isNotEmpty()){
+            currentCard = cards.first()
+            cards.remove(currentCard)
+        } else {
+            println("There are no more cards left in this deck, you need to reset the deck")
+        }
     }
 
-    private fun getCurrentCardLabelAndDisplaylValue(): Pair<String, String>? {
-        val card = currentCard ?: return null //handle this when implementing error handling
-        return Pair(card.label, card.displayValue)
+    private fun getCurrentCardDisplayValue(): String {
+        val card = currentCard ?: return CURRENT_CARD_ERROR_MESSAGE
+        return card.displayValue
+    }
+
+    private fun getCurrentCardLabel(): String {
+        val card = currentCard ?: return CURRENT_CARD_ERROR_MESSAGE
+        return card.label
     }
 
     private fun setCardLabelAndDisplayValue(value: Int): Pair<String, String>{

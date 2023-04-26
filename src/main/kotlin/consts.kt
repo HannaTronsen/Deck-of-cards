@@ -14,3 +14,4 @@ val VALID_CARD_TYPES: Set<DefaultCardTypes> = setOf(
     DefaultCardTypes.DIAMOND,
     DefaultCardTypes.CLUB,
 )
+const val CURRENT_CARD_ERROR_MESSAGE = "You haven't drawn a card yet"
